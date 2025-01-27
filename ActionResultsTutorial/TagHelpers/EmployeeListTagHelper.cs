@@ -6,7 +6,6 @@ using System.Text;
 
 namespace ActionResultsTutorial.TagHelpers
 {
-
     [HtmlTargetElement("employee-list")]
     public class EmployeeListTagHelper : TagHelper
     {
@@ -25,57 +24,57 @@ namespace ActionResultsTutorial.TagHelpers
                 },
                 new Employee()
                 {
-                    Id=2,
-                    Firstname="Mehemmed",
+                    Id = 2,
+                    Firstname = "Mehemmed",
                     Lastname = "Humbetli",
                     CityId = 2,
                 },
-                 new Employee()
+                new Employee()
                 {
-                    Id=3,
-                    Firstname="Veli",
+                    Id = 3,
+                    Firstname = "Veli",
                     Lastname = "Kerimli",
                     CityId = 3,
                 },
-                        new Employee()
+                new Employee()
                 {
-                    Id=2,
-                    Firstname="Amin",
+                    Id = 4,
+                    Firstname = "Amin",
                     Lastname = "Humbetli",
                     CityId = 2,
                 },
-                 new Employee()
+                new Employee()
                 {
-                    Id=3,
-                    Firstname="Mirze",
+                    Id = 5,
+                    Firstname = "Mirze",
                     Lastname = "Kerimli",
                     CityId = 3,
                 },
-                     new Employee()
+                new Employee()
                 {
-                    Id=3,
-                    Firstname="Kamal",
+                    Id = 6,
+                    Firstname = "Kamal",
                     Lastname = "Kerimli",
                     CityId = 3,
                 },
-
             };
         }
 
-        private const string ListCountAttribute = "MehemmedinCountu";
+        //private const string ListCountAttribute = "MehemmedinCountu";
 
-        [HtmlAttributeName(ListCountAttribute)]
-        public int ListCount { get; set; }
+        //[HtmlAttributeName(ListCountAttribute)]
+        //public int ListCount { get; set; }
 
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "section";
-            var query = employees.Take(ListCount);
+            var query = employees.OrderBy(e => e.Firstname);
+
             StringBuilder sb = new();
             foreach (var item in query)
             {
-                sb.AppendFormat("<h2><a href ='employee/detail/{0}'>{1}</a></h2>" , item.Id , item.Firstname);
+                sb.AppendFormat("<h2><a href ='employee/detail/{0}'>{1}</a></h2>", item.Id, item.Firstname);
             }
             output.Content.SetHtmlContent(sb.ToString());
         }
